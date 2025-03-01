@@ -1,0 +1,1 @@
+Aplikacja do sterowania zdalnego roletami w oknach oraz w drzwiach balkonowych
