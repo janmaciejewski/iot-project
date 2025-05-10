@@ -1,3 +1,5 @@
+Pełna dokumentacja dostępna jest w pliku "HighLevel Design, Diagramy, ReadME.pdf"
+
 1. Opis działania 
 
 Aplikacja umożliwia użytkownikom sterowanie roletami okiennymi za pomocą interfejsu webowego. Użytkownik ma do dyspozycji trzy przyciski: 
