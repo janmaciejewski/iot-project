@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Sterowanie roletami</title>
+</head>
+<body>
+  <h1>Sterowanie roletami</h1>
+
+  <div id="register">
+    <h2>Rejestracja</h2>
+    <input type="email" id="regEmail" placeholder="Email">
+    <input type="password" id="regPassword" placeholder="Hasło">
+    <button onclick="register()">Zarejestruj się</button>
+    <p id="regMessage" style="color:green;"></p>
+  </div>
+
+  <div id="login">
+    <h2>Logowanie</h2>
+    <input type="email" id="loginEmail" placeholder="Email">
+    <input type="password" id="loginPassword" placeholder="Hasło">
+    <button onclick="login()">Zaloguj</button>
+    <p id="loginMessage" style="color:red;"></p>
+  </div>
+
+  <div id="panel" style="display:none;">
+    <p>Aktualny poziom: <span id="status">--</span>%</p>
+    <button onclick="sendCommand('up')">Podnieś rolety</button>
+    <button onclick="sendCommand('stop')">Zatrzymaj</button>
+    <button onclick="sendCommand('down')">Opuść rolety</button>
+    <button onclick="logout()">Wyloguj</button>
+  </div>
+
+  <script>
+    async function register() {
+      const email = document.getElementById('regEmail').value;
+      const password = document.getElementById('regPassword').value;
+
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        document.getElementById('regMessage').innerText = 'Zarejestrowano! Sprawdź email.';
+      } else {
+        document.getElementById('regMessage').innerText = data.message;
+      }
+    }
+
+    async function login() {
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('register').style.display = 'none';
+        document.getElementById('panel').style.display = 'block';
+      } else {
+        document.getElementById('loginMessage').innerText = data.message;
+      }
+    }
+
+    async function logout() {
+      await fetch('/api/logout', { method: 'POST' });
+      document.getElementById('login').style.display = 'block';
+      document.getElementById('register').style.display = 'block';
+      document.getElementById('panel').style.display = 'none';
+    }
+
+    async function updateStatus() {
+      const res = await fetch('/api/status');
+      if (res.ok) {
+        const data = await res.json();
+        document.getElementById('status').innerText = data.value;
+      }
+    }
+
+    async function sendCommand(cmd) {
+      await fetch(`/api/${cmd}`, { method: 'POST' });
+    }
+
+    setInterval(updateStatus, 1000);
+    updateStatus();
+  </script>
+</body>
+</html>
