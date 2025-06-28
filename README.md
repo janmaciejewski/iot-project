@@ -203,6 +203,7 @@ Użytkownicy logują się za pomocą indywidualnych kont aplikacji przechowywany
 
 API aplikacji wymaga tokenów JWT do komunikacji. 
 
+
 Hasła użytkowników są przechowywane w formie zahaszowanej. 
 
 Wszystkie operacje są rejestrowane w systemie logów dla audytu. 
