@@ -74,4 +74,5 @@ async function sendEmail(to, token) {
   });
 }
 
+
 module.exports = { registerUser, loginUser };
