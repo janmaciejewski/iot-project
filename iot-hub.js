@@ -46,6 +46,6 @@ async function sendStatusToIoTHub(value, operation) {
   } catch (err) {
     console.error("Błąd sendStatusToIoTHub:", err.message);
   }
-}
+} 
 
 module.exports = { sendStatusToIoTHub };
